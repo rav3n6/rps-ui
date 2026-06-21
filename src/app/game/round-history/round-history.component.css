@@ -1,0 +1,155 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.history-card {
+  width: min(960px, calc(100% - 32px));
+  margin: 0 auto 32px;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: #0f1717;
+  color: #f8fafc;
+}
+
+mat-card-header {
+  padding: 24px 24px 8px;
+}
+
+mat-card-title {
+  color: #f8fafc;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+mat-card-subtitle {
+  margin-top: 4px;
+  color: #cbd5e1;
+}
+
+mat-card-content {
+  padding: 24px;
+}
+
+.empty-state {
+  display: flex;
+  min-height: 220px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  border: 1px dashed #3a4b49;
+  border-radius: 20px;
+  background-color: #182221;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 12px;
+  color: #12d4dc;
+  font-size: 56px;
+}
+
+.empty-state h3 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.empty-state p {
+  margin: 8px 0 0;
+  color: #94a3b8;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #2c3b39;
+  border-radius: 20px;
+}
+
+.history-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  background-color: #182221;
+}
+
+.history-table th {
+  padding: 14px 16px;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.history-table td {
+  padding: 16px;
+  border-top: 1px solid #2c3b39;
+  color: #e2e8f0;
+}
+
+.history-table tbody tr {
+  transition: background-color 160ms ease;
+}
+
+.history-table tbody tr:hover {
+  background-color: rgb(255 255 255 / 4%);
+}
+
+.round-number {
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.move-badge,
+.result-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 84px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.move-badge {
+  background-color: rgb(18 212 220 / 12%);
+  color: #67e8f9;
+  text-transform: capitalize;
+}
+
+.result-badge.player-win {
+  background-color: rgb(34 197 94 / 14%);
+  color: #86efac;
+}
+
+.result-badge.computer-win {
+  background-color: rgb(239 68 68 / 14%);
+  color: #fca5a5;
+}
+
+.result-badge.draw {
+  background-color: rgb(245 158 11 / 14%);
+  color: #fcd34d;
+}
+
+.played-at {
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  mat-card-content {
+    padding: 16px;
+  }
+
+  .empty-state {
+    min-height: 180px;
+  }
+}

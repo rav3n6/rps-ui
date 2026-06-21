@@ -1,1 +1,97 @@
-<p>round-history works!</p>
+<mat-card appearance="outlined" class="history-card">
+  <mat-card-header>
+    <mat-card-title>Round History</mat-card-title>
+    <mat-card-subtitle>
+      Moves and results from the current session
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (rounds().length === 0) {
+      <div class="empty-state">
+        <mat-icon
+          class="empty-icon"
+          fontSet="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          history
+        </mat-icon>
+
+        <h3>No rounds played yet</h3>
+
+        <p>
+          Choose rock, paper, or scissors to begin the game.
+        </p>
+      </div>
+    } @else {
+      <div class="table-wrapper">
+        <table
+          class="history-table"
+          aria-label="Round history"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Round</th>
+              <th scope="col">Player</th>
+              <th scope="col">Computer</th>
+              <th scope="col">Result</th>
+              <th scope="col">Time</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (
+              round of rounds();
+              track round.roundNumber
+            ) {
+              <tr>
+                <td class="round-number">
+                  #{{ round.roundNumber }}
+                </td>
+
+                <td>
+                  <span class="move-badge">
+                    {{ round.playerMove }}
+                  </span>
+                </td>
+
+                <td>
+                  <span class="move-badge">
+                    {{ round.computerMove }}
+                  </span>
+                </td>
+
+                <td>
+                  <span
+                    class="result-badge"
+                    [class.player-win]="round.result === 'PLAYER_WIN'"
+                    [class.computer-win]="round.result === 'COMPUTER_WIN'"
+                    [class.draw]="round.result === 'DRAW'"
+                  >
+                    @switch (round.result) {
+                      @case ('PLAYER_WIN') {
+                        Player won
+                      }
+
+                      @case ('COMPUTER_WIN') {
+                        Computer won
+                      }
+
+                      @case ('DRAW') {
+                        Draw
+                      }
+                    }
+                  </span>
+                </td>
+
+                <td class="played-at">
+                  {{ round.playedAt | date: 'mediumTime' }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

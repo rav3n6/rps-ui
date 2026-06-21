@@ -1,1 +1,49 @@
-<p>scoreboard works!</p>
+<mat-card appearance="outlined" class="scoreboard-card">
+  <mat-card-header>
+    <mat-card-title>Scoreboard</mat-card-title>
+    <mat-card-subtitle>Current game session</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="score-grid">
+      <article class="score-item">
+        <mat-icon
+          class="score-icon"
+          fontSet="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          person
+        </mat-icon>
+
+        <span class="score-label">Player Wins</span>
+        <strong class="score-value">{{ playerWins() }}</strong>
+      </article>
+
+      <article class="score-item">
+        <mat-icon
+          class="score-icon"
+          fontSet="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          smart_toy
+        </mat-icon>
+
+        <span class="score-label">Computer Wins</span>
+        <strong class="score-value">{{ computerWins() }}</strong>
+      </article>
+
+      <article class="score-item">
+        <mat-icon
+          class="score-icon"
+          fontSet="material-symbols-outlined"
+          aria-hidden="true"
+        >
+          balance
+        </mat-icon>
+
+        <span class="score-label">Draws</span>
+        <strong class="score-value">{{ draws() }}</strong>
+      </article>
+    </div>
+  </mat-card-content>
+</mat-card>

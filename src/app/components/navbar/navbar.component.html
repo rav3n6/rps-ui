@@ -1,9 +1,22 @@
 <header class="top-header">
-  <div class="logo">MyApp</div>
-  <nav class="nav-links">
-    <!-- routerLink handles the route, routerLinkActive adds a class when the route is busy -->
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-    <a routerLink="/analytics" routerLinkActive="active">Analytics</a>
-    <a routerLink="/settings" routerLinkActive="active">Settings</a>
+  <a class="brand" routerLink="/">
+    Rock Paper Scissors Arena
+  </a>
+
+  <nav class="nav-links" aria-label="Main navigation">
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Game
+    </a>
+
+    <a
+      routerLink="/analytics"
+      routerLinkActive="active"
+    >
+      Analytics
+    </a>
   </nav>
 </header>
