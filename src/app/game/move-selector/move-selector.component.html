@@ -1,59 +1,70 @@
-<p>move-selector works!</p>
-<mat-slide-toggle>Toggle me!</mat-slide-toggle>
+<mat-card appearance="outlined" class="move-card">
+  <mat-card-header>
+    <mat-card-title>Choose your move</mat-card-title>
+    <mat-card-subtitle>
+      Select rock, paper, or scissors
+    </mat-card-subtitle>
+  </mat-card-header>
 
+  <mat-card-content>
+    <div
+      class="move-grid"
+      role="group"
+      aria-label="Choose your move"
+    >
+      <button
+        mat-flat-button
+        type="button"
+        class="move-button"
+        aria-label="Choose rock"
+      >
+        <span class="move-button-content">
+          <mat-icon
+            fontSet="material-symbols-outlined"
+            aria-hidden="true"
+          >
+            landscape
+          </mat-icon>
 
-
-
-
-<section>
-  <div class="example-label">Floating Action Button (FAB)</div>
-  <div class="example-button-row">
-    <div class="example-flex-container">
-      <button matFab aria-label="Example icon button with a delete icon">
-        <mat-icon>delete</mat-icon>
+          <span>Rock</span>
+        </span>
       </button>
-      <button matFab disabled aria-label="Example icon button with a heart icon">
-        <mat-icon>favorite</mat-icon>
+
+      <button
+        mat-flat-button
+        type="button"
+        class="move-button"
+        aria-label="Choose paper"
+      >
+        <span class="move-button-content">
+          <mat-icon
+            fontSet="material-symbols-outlined"
+            aria-hidden="true"
+          >
+            front_hand
+          </mat-icon>
+
+          <span>Paper</span>
+        </span>
+      </button>
+
+      <button
+        mat-flat-button
+        type="button"
+        class="move-button"
+        aria-label="Choose scissors"
+      >
+        <span class="move-button-content">
+          <mat-icon
+            fontSet="material-symbols-outlined"
+            aria-hidden="true"
+          >
+            content_cut
+          </mat-icon>
+
+          <span>Scissors</span>
+        </span>
       </button>
     </div>
-  </div>
-</section>
-<mat-divider/>
-<section>
-  <div class="example-label">Mini FAB</div>
-  <div class="example-button-row">
-    <div class="example-flex-container">
-      <button matMiniFab aria-label="Example icon button with a menu icon">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <button matMiniFab disabled aria-label="Example icon button with a home icon">
-        <mat-icon>home</mat-icon>
-      </button>
-    </div>
-  </div>
-</section>
-<mat-divider/>
-<section>
-  <div class="example-label">Extended FAB</div>
-  <div class="example-button-row">
-    <div class="example-flex-container">
-      <button mat-fab extended>
-        <mat-icon>favorite</mat-icon>
-        Basic
-      </button>
-      <button matFab extended disabled>
-        <mat-icon>favorite</mat-icon>
-        Disabled
-      </button>
-      <a matFab extended routerLink=".">
-        <mat-icon>favorite</mat-icon>
-        Link
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- Copyright 2026 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at https://angular.io/license -->
+  </mat-card-content>
+</mat-card>

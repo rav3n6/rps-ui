@@ -1,24 +1,79 @@
-section {
+:host {
+  display: block;
+  width: 100%;
+}
+
+.move-card {
+  width: min(960px, calc(100% - 32px));
+  margin: 24px auto;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+mat-card-header {
+  padding: 24px 24px 8px;
+}
+
+mat-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+mat-card-subtitle {
+  margin-top: 4px;
+}
+
+mat-card-content {
+  padding: 24px;
+}
+
+.move-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* gap: 13px; */
+    gap: 16px;
+}
+
+.move-button {
+  width: 100%;
+  height: 120px;
+  border-radius: 20px;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.move-button-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
-.example-label {
-  font-size: 14px;
-  margin: 0 16px 0 8px;
-  min-width: 120px;
+.move-button mat-icon {
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
 }
 
-.example-button-row {
-  max-width: 600px;
+.move-button:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 18%);
 }
 
-.example-button-row .mat-mdc-button-base {
-  margin: 8px 8px 8px 0;
-}
+@media (max-width: 700px) {
+  .move-grid {
+    grid-template-columns: 1fr;
+  }
 
-.example-flex-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  .move-button {
+    height: 88px;
+  }
+
+  .move-button-content {
+    flex-direction: row;
+  }
 }

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import {MatSlideToggle} from '@angular/material/slide-toggle';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDividerModule} from '@angular/material/divider';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-move-selector',
-  imports: [MatSlideToggle,MatButtonModule,MatIconModule, MatDividerModule],
+  imports: [
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule
+  ],
   templateUrl: './move-selector.component.html',
   styleUrls: ['./move-selector.component.css']
 })
-export class MoveSelectorComponent {
-
-}
+export class MoveSelectorComponent {}
