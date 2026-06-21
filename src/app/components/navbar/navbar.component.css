@@ -1,0 +1,17 @@
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #1e293b;
+  color: #ffffff;
+}
+.nav-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  margin-left: 1.5rem;
+}
+.nav-links a.active {
+  color: #3b82f6;
+  font-weight: bold;
+}
