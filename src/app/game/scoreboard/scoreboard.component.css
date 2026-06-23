@@ -4,16 +4,17 @@
 }
 
 .scoreboard-card {
-  width: min(960px, calc(100% - 32px));
-  margin: 0 auto 24px;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   border-radius: 24px;
   overflow: hidden;
+  box-sizing: border-box;
   background-color: #0f1717;
   color: #f8fafc;
 }
-
 mat-card-header {
-  padding: 24px 24px 8px;
+  padding: 20px 20px 6px;
 }
 
 mat-card-title {
@@ -26,26 +27,23 @@ mat-card-subtitle {
   margin-top: 4px;
   color: #cbd5e1;
 }
-
 mat-card-content {
-  padding: 24px;
+  padding: 20px;
 }
-
 .score-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 10px;
 }
-
 .score-item {
   display: flex;
-  min-height: 150px;
+  min-height: 110px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   border: 1px solid #2c3b39;
-  border-radius: 20px;
+  border-radius: 18px;
   background-color: #182221;
   text-align: center;
 }
@@ -59,12 +57,13 @@ mat-card-content {
 
 .score-label {
   color: #cbd5e1;
-  font-size: 0.95rem;
+  font-size: 0.82rem;
   font-weight: 500;
+  line-height: 1.2;
 }
 
 .score-value {
-  font-size: 2.25rem;
+  font-size: 1.9rem;
   line-height: 1;
 }
 

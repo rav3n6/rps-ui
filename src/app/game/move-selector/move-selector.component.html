@@ -17,6 +17,7 @@
         type="button"
         class="move-button"
         aria-label="Choose rock"
+        (click)="selectMove('ROCK')"
       >
         <span class="move-button-content">
           <mat-icon
@@ -35,7 +36,8 @@
         type="button"
         class="move-button"
         aria-label="Choose paper"
-      >
+        (click)="selectMove('PAPER')"
+        >
         <span class="move-button-content">
           <mat-icon
             fontSet="material-symbols-outlined"
@@ -48,12 +50,13 @@
         </span>
       </button>
 
-      <button
-        mat-flat-button
-        type="button"
-        class="move-button"
-        aria-label="Choose scissors"
-      >
+        <button
+            mat-flat-button
+            type="button"
+            class="move-button"
+            aria-label="Choose scissors"
+            (click)="selectMove('SCISSORS')"
+        >
         <span class="move-button-content">
           <mat-icon
             fontSet="material-symbols-outlined"

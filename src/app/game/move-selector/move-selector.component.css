@@ -4,14 +4,14 @@
 }
 
 .move-card {
-  width: min(960px, calc(100% - 32px));
-  margin: 24px auto;
+  width: 100%;
+  margin: 0;
   border-radius: 24px;
   overflow: hidden;
+  box-sizing: border-box;
 }
-
 mat-card-header {
-  padding: 24px 24px 8px;
+  padding: 20px 20px 6px;
 }
 
 mat-card-title {
@@ -24,7 +24,7 @@ mat-card-subtitle {
 }
 
 mat-card-content {
-  padding: 24px;
+  padding: 20px;
 }
 
 .move-grid {
@@ -36,7 +36,7 @@ mat-card-content {
 
 .move-button {
   width: 100%;
-  height: 120px;
+  height: 96px;
   border-radius: 20px;
   transition:
     transform 160ms ease,
@@ -54,9 +54,9 @@ mat-card-content {
 }
 
 .move-button mat-icon {
-  width: 48px;
-  height: 48px;
-  font-size: 48px;
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
 }
 
 .move-button:hover {

@@ -1,4 +1,13 @@
-<p>game-page works!</p>
-<app-move-selector></app-move-selector>
-<app-scoreboard></app-scoreboard>
-<app-round-history></app-round-history>
+<div class="game-layout">
+  <section class="move-section">
+    <app-move-selector  (moveSelected)="onMoveSelected($event)"></app-move-selector>
+    @if (selectedMove !=null){
+        Selected Move : <strong>{{ selectedMove }}</strong>
+    }
+  </section>
+
+  <section class="game-summary-grid">
+    <app-scoreboard></app-scoreboard>
+    <app-round-history></app-round-history>
+  </section>
+</div>
