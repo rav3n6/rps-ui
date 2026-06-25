@@ -1,29 +1,30 @@
 <mat-card appearance="outlined" class="history-card">
   <mat-card-header>
     <mat-card-title>Round History</mat-card-title>
+
     <mat-card-subtitle>
-      Moves and results from the current session
+      Moves and results from this session
     </mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-    @if (rounds().length === 0) {
-      <div class="empty-state">
-        <mat-icon
-          class="empty-icon"
-          fontSet="material-symbols-outlined"
-          aria-hidden="true"
-        >
-          history
-        </mat-icon>
+    <div class="empty-state" *ngIf="rounds.length === 0; else historyTable">
+      <mat-icon
+        class="empty-icon"
+        fontSet="material-symbols-outlined"
+        aria-hidden="true"
+      >
+        history
+      </mat-icon>
 
-        <h3>No rounds played yet</h3>
+      <h3>No rounds played yet</h3>
 
-        <p>
-          Choose rock, paper, or scissors to begin the game.
-        </p>
-      </div>
-    } @else {
+      <p>
+        Choose a move to begin the game.
+      </p>
+    </div>
+
+    <ng-template #historyTable>
       <div class="table-wrapper">
         <table
           class="history-table"
@@ -40,58 +41,56 @@
           </thead>
 
           <tbody>
-            @for (
-              round of rounds();
-              track round.roundNumber
-            ) {
-              <tr>
-                <td class="round-number">
-                  #{{ round.roundNumber }}
-                </td>
+            <tr *ngFor="let round of rounds; let index = index">
+              <td class="round-number">
+                #{{ rounds.length - index }}
+              </td>
 
-                <td>
-                  <span class="move-badge">
-                    {{ round.playerMove }}
-                  </span>
-                </td>
+              <td>
+                <span class="move-badge">
+                  {{ round.playerMove | titlecase }}
+                </span>
+              </td>
 
-                <td>
-                  <span class="move-badge">
-                    {{ round.computerMove }}
-                  </span>
-                </td>
+              <td>
+                <span class="move-badge">
+                  {{ round.computerMove | titlecase }}
+                </span>
+              </td>
 
-                <td>
-                  <span
-                    class="result-badge"
-                    [class.player-win]="round.result === 'PLAYER_WIN'"
-                    [class.computer-win]="round.result === 'COMPUTER_WIN'"
-                    [class.draw]="round.result === 'DRAW'"
-                  >
-                    @switch (round.result) {
-                      @case ('PLAYER_WIN') {
-                        Player won
-                      }
+              <td>
+                <span
+                  class="result-badge"
+                  [class.win]="round.result === 'WIN'"
+                  [class.loss]="round.result === 'LOSS'"
+                  [class.draw]="round.result === 'DRAW'"
+                >
+                  <ng-container [ngSwitch]="round.result">
+                    <span *ngSwitchCase="'WIN'">
+                      Won
+                    </span>
 
-                      @case ('COMPUTER_WIN') {
-                        Computer won
-                      }
+                    <span *ngSwitchCase="'LOSS'">
+                      Lost
+                    </span>
 
-                      @case ('DRAW') {
-                        Draw
-                      }
-                    }
-                  </span>
-                </td>
+                    <span *ngSwitchCase="'DRAW'">
+                      Draw
+                    </span>
+                  </ng-container>
+                </span>
+              </td>
 
-                <td class="played-at">
-                  {{ round.playedAt | date: 'mediumTime' }}
-                </td>
-              </tr>
-            }
+              <td class="played-at">
+                {{
+                  round.playedAt
+                    | date: 'mediumTime'
+                }}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
-    }
+    </ng-template>
   </mat-card-content>
 </mat-card>

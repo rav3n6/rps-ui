@@ -1,6 +1,7 @@
 <mat-card appearance="outlined" class="move-card">
   <mat-card-header>
     <mat-card-title>Choose your move</mat-card-title>
+
     <mat-card-subtitle>
       Select rock, paper, or scissors
     </mat-card-subtitle>
@@ -17,6 +18,7 @@
         type="button"
         class="move-button"
         aria-label="Choose rock"
+        [disabled]="disabled"
         (click)="selectMove('ROCK')"
       >
         <span class="move-button-content">
@@ -36,8 +38,9 @@
         type="button"
         class="move-button"
         aria-label="Choose paper"
+        [disabled]="disabled"
         (click)="selectMove('PAPER')"
-        >
+      >
         <span class="move-button-content">
           <mat-icon
             fontSet="material-symbols-outlined"
@@ -50,13 +53,14 @@
         </span>
       </button>
 
-        <button
-            mat-flat-button
-            type="button"
-            class="move-button"
-            aria-label="Choose scissors"
-            (click)="selectMove('SCISSORS')"
-        >
+      <button
+        mat-flat-button
+        type="button"
+        class="move-button"
+        aria-label="Choose scissors"
+        [disabled]="disabled"
+        (click)="selectMove('SCISSORS')"
+      >
         <span class="move-button-content">
           <mat-icon
             fontSet="material-symbols-outlined"

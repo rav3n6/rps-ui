@@ -1,8 +1,25 @@
 import { Routes } from '@angular/router';
-import { GamePageComponent } from './game/game-page/game-page.component';
-import { AnalyticsComponent } from './analytics/analytics/analytics.component';
+
+import {
+  AnalyticsDashboardComponent
+} from './analytics/analytics-dashboard.component';
+
+
+import {
+  GamePageComponent
+} from './game/game-page/game-page.component';
 
 export const routes: Routes = [
-    {path: '', component: GamePageComponent},
-    {path: 'analytics', component: AnalyticsComponent},
+  {
+    path: '',
+    component: GamePageComponent
+  },
+  {
+    path: 'analytics',
+    component: AnalyticsDashboardComponent
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];

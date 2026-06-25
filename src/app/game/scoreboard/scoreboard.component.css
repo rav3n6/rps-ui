@@ -1,40 +1,45 @@
 :host {
   display: block;
   width: 100%;
+  height: 100%;
 }
 
 .scoreboard-card {
   width: 100%;
   height: 100%;
   margin: 0;
-  border-radius: 24px;
   overflow: hidden;
+  border-radius: 24px;
   box-sizing: border-box;
   background-color: #0f1717;
   color: #f8fafc;
 }
+
 mat-card-header {
   padding: 20px 20px 6px;
 }
 
 mat-card-title {
+  color: #f8fafc;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #f8fafc;
 }
 
 mat-card-subtitle {
   margin-top: 4px;
   color: #cbd5e1;
 }
+
 mat-card-content {
   padding: 20px;
 }
+
 .score-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
+
 .score-item {
   display: flex;
   min-height: 110px;
@@ -49,10 +54,10 @@ mat-card-content {
 }
 
 .score-icon {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   color: #12d4dc;
-  font-size: 40px;
+  font-size: 34px;
 }
 
 .score-label {
@@ -67,12 +72,12 @@ mat-card-content {
   line-height: 1;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 520px) {
   .score-grid {
     grid-template-columns: 1fr;
   }
 
   .score-item {
-    min-height: 110px;
+    min-height: 86px;
   }
 }

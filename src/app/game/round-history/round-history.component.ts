@@ -1,27 +1,22 @@
-import { DatePipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import {
+  CommonModule,
+  DatePipe,
+  TitleCasePipe
+} from '@angular/common';
+
+import { Component, Input } from '@angular/core';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
-export type Move = 'ROCK' | 'PAPER' | 'SCISSORS';
-
-export type RoundResult =
-  | 'PLAYER_WIN'
-  | 'COMPUTER_WIN'
-  | 'DRAW';
-
-export interface RoundHistoryItem {
-  roundNumber: number;
-  playerMove: Move;
-  computerMove: Move;
-  result: RoundResult;
-  playedAt: string;
-}
+import { GameRound } from '../game.models';
 
 @Component({
   selector: 'app-round-history',
   imports: [
+    CommonModule,
     DatePipe,
+    TitleCasePipe,
     MatCardModule,
     MatIconModule
   ],
@@ -29,5 +24,5 @@ export interface RoundHistoryItem {
   styleUrl: './round-history.component.css'
 })
 export class RoundHistoryComponent {
-  readonly rounds = input<readonly RoundHistoryItem[]>([]);
+  @Input() rounds: readonly GameRound[] = [];
 }

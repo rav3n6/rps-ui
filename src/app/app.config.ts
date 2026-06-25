@@ -1,9 +1,15 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import {NavbarComponent} from "./components/navbar/navbar.component"; 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), NavbarComponent]
+  providers: [
+    provideRouter(routes),
+    provideHttpClient()
+  ]
 };
+// export const appConfig: ApplicationConfig = {
+//   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), NavbarComponent]
+// };

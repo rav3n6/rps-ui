@@ -1,18 +1,37 @@
-<div class="analytics-page">
+<div class="analytics-page" *ngIf="{
+  statistics: gameState.statistics$ | async,
+  loading: gameState.loading$ | async,
+  error: gameState.error$ | async,
+  moveDistribution: gameState.moveDistribution$ | async,
+  mostPlayedMove: gameState.mostPlayedMove$ | async,
+  lossRate: gameState.lossRate$ | async,
+  drawRate: gameState.drawRate$ | async
+} as state">
   <header class="analytics-heading">
     <p class="eyebrow">Session insights</p>
     <h1>Game Analytics</h1>
 
     <p>
-      Performance and move behaviour for the current
-      game session.
+      Performance and move behaviour for the current game session.
     </p>
   </header>
 
-  @if (statistics().totalRounds === 0) {
+  <div class="api-error" role="alert" *ngIf="state.error">
+    <mat-icon
+      fontSet="material-symbols-outlined"
+      aria-hidden="true"
+    >
+      error
+    </mat-icon>
+
+    <span>{{ state.error }}</span>
+  </div>
+
+  <ng-container *ngIf="state.statistics">
     <mat-card
       appearance="outlined"
       class="empty-analytics"
+      *ngIf="state.statistics.totalRounds === 0"
     >
       <mat-card-content>
         <mat-icon
@@ -25,154 +44,151 @@
         <h2>No analytics available yet</h2>
 
         <p>
-          Play at least one round to generate session
-          analytics.
+          Play at least one round to generate session analytics.
         </p>
       </mat-card-content>
     </mat-card>
-  } @else {
-    <section class="metric-grid">
-      <mat-card appearance="outlined" class="metric-card">
-        <mat-icon fontSet="material-symbols-outlined">
-          sports_esports
-        </mat-icon>
 
-        <span>Total Rounds</span>
-        <strong>{{ statistics().totalRounds }}</strong>
-      </mat-card>
-
-      <mat-card appearance="outlined" class="metric-card">
-        <mat-icon fontSet="material-symbols-outlined">
-          trophy
-        </mat-icon>
-
-        <span>Player Win Rate</span>
-        <strong>{{ statistics().winRate }}%</strong>
-      </mat-card>
-
-      <mat-card appearance="outlined" class="metric-card">
-        <mat-icon fontSet="material-symbols-outlined">
-          smart_toy
-        </mat-icon>
-
-        <span>Computer Win Rate</span>
-        <strong>{{ lossRate() }}%</strong>
-      </mat-card>
-
-      <mat-card appearance="outlined" class="metric-card">
-        <mat-icon fontSet="material-symbols-outlined">
-          balance
-        </mat-icon>
-
-        <span>Draw Rate</span>
-        <strong>{{ drawRate() }}%</strong>
-      </mat-card>
-    </section>
-
-    <section class="analytics-grid">
-      <mat-card
-        appearance="outlined"
-        class="analytics-card"
-      >
-        <mat-card-header>
-          <mat-card-title>
-            Player Move Distribution
-          </mat-card-title>
-
-          <mat-card-subtitle>
-            Frequency of each selected move
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-content>
-          <div class="distribution-row">
-            <div class="distribution-label">
-              <span>Rock</span>
-              <strong>{{ moveDistribution().ROCK }}</strong>
-            </div>
-
-            <div class="distribution-track">
-              <div
-                class="distribution-fill"
-                [style.width.%]="
-                  movePercentage(moveDistribution().ROCK)
-                "
-              ></div>
-            </div>
-          </div>
-
-          <div class="distribution-row">
-            <div class="distribution-label">
-              <span>Paper</span>
-              <strong>{{ moveDistribution().PAPER }}</strong>
-            </div>
-
-            <div class="distribution-track">
-              <div
-                class="distribution-fill"
-                [style.width.%]="
-                  movePercentage(moveDistribution().PAPER)
-                "
-              ></div>
-            </div>
-          </div>
-
-          <div class="distribution-row">
-            <div class="distribution-label">
-              <span>Scissors</span>
-              <strong>
-                {{ moveDistribution().SCISSORS }}
-              </strong>
-            </div>
-
-            <div class="distribution-track">
-              <div
-                class="distribution-fill"
-                [style.width.%]="
-                  movePercentage(
-                    moveDistribution().SCISSORS
-                  )
-                "
-              ></div>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card
-        appearance="outlined"
-        class="analytics-card most-played-card"
-      >
-        <mat-card-header>
-          <mat-card-title>
-            Playing Behaviour
-          </mat-card-title>
-
-          <mat-card-subtitle>
-            Most frequently selected move
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-content>
-          <mat-icon
-            class="large-icon"
-            fontSet="material-symbols-outlined"
-            aria-hidden="true"
-          >
-            psychology
+    <div *ngIf="state.statistics.totalRounds > 0">
+      <section class="metric-grid">
+        <mat-card appearance="outlined" class="metric-card">
+          <mat-icon fontSet="material-symbols-outlined">
+            sports_esports
           </mat-icon>
 
-          <span>Most played move</span>
+          <span>Total Rounds</span>
+          <strong>{{ state.statistics.totalRounds }}</strong>
+        </mat-card>
 
-          <strong>
-            {{
-              mostPlayedMove() === null
-                ? 'N/A'
-                : (mostPlayedMove() | titlecase)
-            }}
-          </strong>
-        </mat-card-content>
-      </mat-card>
-    </section>
-  }
+        <mat-card appearance="outlined" class="metric-card">
+          <mat-icon fontSet="material-symbols-outlined">
+            trophy
+          </mat-icon>
+
+          <span>Player Win Rate</span>
+          <strong>{{ state.statistics.winRate }}%</strong>
+        </mat-card>
+
+        <mat-card appearance="outlined" class="metric-card">
+          <mat-icon fontSet="material-symbols-outlined">
+            smart_toy
+          </mat-icon>
+
+          <span>Computer Win Rate</span>
+          <strong>{{ state.lossRate }}%</strong>
+        </mat-card>
+
+        <mat-card appearance="outlined" class="metric-card">
+          <mat-icon fontSet="material-symbols-outlined">
+            balance
+          </mat-icon>
+
+          <span>Draw Rate</span>
+          <strong>{{ state.drawRate }}%</strong>
+        </mat-card>
+      </section>
+
+      <section class="analytics-grid" *ngIf="state.moveDistribution">
+        <mat-card
+          appearance="outlined"
+          class="analytics-card"
+        >
+          <mat-card-header>
+            <mat-card-title>
+              Player Move Distribution
+            </mat-card-title>
+
+            <mat-card-subtitle>
+              Frequency of each selected move
+            </mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="distribution-row">
+              <div class="distribution-label">
+                <span>Rock</span>
+                <strong>{{ state.moveDistribution.ROCK }}</strong>
+              </div>
+
+              <div class="distribution-track">
+                <div
+                  class="distribution-fill"
+                  [style.width.%]="
+                    movePercentage(state.moveDistribution.ROCK, state.statistics.totalRounds)
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <div class="distribution-row">
+              <div class="distribution-label">
+                <span>Paper</span>
+                <strong>{{ state.moveDistribution.PAPER }}</strong>
+              </div>
+
+              <div class="distribution-track">
+                <div
+                  class="distribution-fill"
+                  [style.width.%]="
+                    movePercentage(state.moveDistribution.PAPER, state.statistics.totalRounds)
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <div class="distribution-row">
+              <div class="distribution-label">
+                <span>Scissors</span>
+                <strong>{{ state.moveDistribution.SCISSORS }}</strong>
+              </div>
+
+              <div class="distribution-track">
+                <div
+                  class="distribution-fill"
+                  [style.width.%]="
+                    movePercentage(state.moveDistribution.SCISSORS, state.statistics.totalRounds)
+                  "
+                ></div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card
+          appearance="outlined"
+          class="analytics-card most-played-card"
+        >
+          <mat-card-header>
+            <mat-card-title>
+              Playing Behaviour
+            </mat-card-title>
+
+            <mat-card-subtitle>
+              Most frequently selected move
+            </mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <mat-icon
+              class="large-icon"
+              fontSet="material-symbols-outlined"
+              aria-hidden="true"
+            >
+              psychology
+            </mat-icon>
+
+            <span>Most played move</span>
+
+            <strong>
+              {{
+                state.mostPlayedMove === null
+                  ? 'N/A'
+                  : (state.mostPlayedMove | titlecase)
+              }}
+            </strong>
+          </mat-card-content>
+        </mat-card>
+      </section>
+    </div>
+  </ng-container>
 </div>

@@ -1,18 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 
-import { AnalyticsComponent } from './analytics-dashboard.component';
+import { AnalyticsDashboardComponent } from './analytics-dashboard.component';
 
-describe('AnalyticsComponent', () => {
-  let component: AnalyticsComponent;
-  let fixture: ComponentFixture<AnalyticsComponent>;
+describe('AnalyticsDashboardComponent', () => {
+  let component: AnalyticsDashboardComponent;
+  let fixture: ComponentFixture<AnalyticsDashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AnalyticsComponent]
+      imports: [AnalyticsDashboardComponent],
+      providers: [provideHttpClient()]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AnalyticsComponent);
+    fixture = TestBed.createComponent(AnalyticsDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

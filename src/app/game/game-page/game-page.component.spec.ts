@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 
 import { GamePageComponent } from './game-page.component';
 
@@ -8,7 +9,8 @@ describe('GamePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GamePageComponent]
+      imports: [GamePageComponent],
+      providers: [provideHttpClient()]
     })
     .compileComponents();
 

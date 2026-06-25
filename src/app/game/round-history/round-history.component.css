@@ -1,13 +1,15 @@
 :host {
   display: block;
   width: 100%;
+  height: 100%;
 }
+
 .history-card {
   width: 100%;
   height: 100%;
   margin: 0;
-  border-radius: 24px;
   overflow: hidden;
+  border-radius: 24px;
   box-sizing: border-box;
   background-color: #0f1717;
   color: #f8fafc;
@@ -17,9 +19,6 @@ mat-card-header {
   padding: 20px 20px 6px;
 }
 
-mat-card-content {
-  padding: 20px;
-}
 mat-card-title {
   color: #f8fafc;
   font-size: 1.5rem;
@@ -29,6 +28,10 @@ mat-card-title {
 mat-card-subtitle {
   margin-top: 4px;
   color: #cbd5e1;
+}
+
+mat-card-content {
+  padding: 20px;
 }
 
 .empty-state {
@@ -55,8 +58,7 @@ mat-card-subtitle {
 .empty-state h3 {
   margin: 0;
   color: #f8fafc;
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .empty-state p {
@@ -73,7 +75,7 @@ mat-card-subtitle {
 
 .history-table {
   width: 100%;
-  min-width: 720px;
+  min-width: 620px;
   border-collapse: collapse;
   background-color: #182221;
 }
@@ -85,7 +87,7 @@ mat-card-subtitle {
   padding: 12px 14px;
   background-color: #182221;
   color: #94a3b8;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-align: left;
@@ -116,20 +118,19 @@ mat-card-subtitle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 84px;
-  padding: 7px 12px;
+  min-width: 76px;
+  padding: 6px 10px;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 600;
 }
 
 .move-badge {
   background-color: rgb(18 212 220 / 12%);
   color: #67e8f9;
-  text-transform: capitalize;
 }
 
-.result-badge.player-win {
+/* .result-badge.player-win {
   background-color: rgb(34 197 94 / 14%);
   color: #86efac;
 }
@@ -142,19 +143,24 @@ mat-card-subtitle {
 .result-badge.draw {
   background-color: rgb(245 158 11 / 14%);
   color: #fcd34d;
-}
+} */
 
 .played-at {
   color: #94a3b8;
   white-space: nowrap;
 }
 
-@media (max-width: 700px) {
-  mat-card-content {
-    padding: 16px;
-  }
+.result-badge.win {
+  background-color: rgb(34 197 94 / 14%);
+  color: #86efac;
+}
 
-  .empty-state {
-    min-height: 180px;
-  }
+.result-badge.loss {
+  background-color: rgb(239 68 68 / 14%);
+  color: #fca5a5;
+}
+
+.result-badge.draw {
+  background-color: rgb(245 158 11 / 14%);
+  color: #fcd34d;
 }

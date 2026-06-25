@@ -1,4 +1,5 @@
-import { Component, input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -12,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './scoreboard.component.css'
 })
 export class ScoreboardComponent {
-  readonly playerWins = input(0);
-  readonly computerWins = input(0);
-  readonly draws = input(0);
+  @Input() playerWins = 0;
+  @Input() computerWins = 0;
+  @Input() draws = 0;
 }

@@ -1,11 +1,6 @@
-import {
-  computed,
-  inject,
-  Injectable,
-  signal
-} from '@angular/core';
-
-import { firstValueFrom } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { GameApiService } from './game-api.service';
 
@@ -27,95 +22,75 @@ const EMPTY_STATISTICS: GameStatistics = {
   providedIn: 'root'
 })
 export class GameStateService {
-  private readonly gameApi = inject(GameApiService);
+  private readonly roundsSubject = new BehaviorSubject<readonly GameRound[]>([]);
+  private readonly statisticsSubject = new BehaviorSubject<GameStatistics>({ ...EMPTY_STATISTICS });
+  private readonly loadingSubject = new BehaviorSubject<boolean>(false);
+  private readonly errorSubject = new BehaviorSubject<string | null>(null);
+  private readonly initializedSubject = new BehaviorSubject<boolean>(false);
 
-  private readonly roundsState =
-    signal<readonly GameRound[]>([]);
+  readonly rounds$: Observable<readonly GameRound[]> = this.roundsSubject.asObservable();
+  readonly statistics$: Observable<GameStatistics> = this.statisticsSubject.asObservable();
+  readonly loading$: Observable<boolean> = this.loadingSubject.asObservable();
+  readonly error$: Observable<string | null> = this.errorSubject.asObservable();
 
-  private readonly statisticsState =
-    signal<GameStatistics>({ ...EMPTY_STATISTICS });
-
-  private readonly loadingState = signal(false);
-
-  private readonly errorState =
-    signal<string | null>(null);
-
-  private readonly initializedState = signal(false);
-
-  readonly rounds = this.roundsState.asReadonly();
-
-  readonly statistics =
-    this.statisticsState.asReadonly();
-
-  readonly loading = this.loadingState.asReadonly();
-
-  readonly error = this.errorState.asReadonly();
-
-  readonly lastRound = computed(
-    () => this.roundsState()[0] ?? null
+  readonly lastRound$: Observable<GameRound | null> = this.rounds$.pipe(
+    map(rounds => rounds[0] ?? null)
   );
 
-  readonly moveDistribution = computed<
-    Record<Move, number>
-  >(() => {
-    const distribution: Record<Move, number> = {
-      ROCK: 0,
-      PAPER: 0,
-      SCISSORS: 0
-    };
-
-    for (const round of this.roundsState()) {
-      distribution[round.playerMove]++;
-    }
-
-    return distribution;
-  });
-
-  readonly mostPlayedMove = computed<Move | null>(() => {
-    if (this.roundsState().length === 0) {
-      return null;
-    }
-
-    const distribution = this.moveDistribution();
-
-    const moves: Move[] = [
-      'ROCK',
-      'PAPER',
-      'SCISSORS'
-    ];
-
-    return moves.reduce((mostPlayed, currentMove) =>
-      distribution[currentMove] >
-      distribution[mostPlayed]
-        ? currentMove
-        : mostPlayed
-    );
-  });
-
-  readonly lossRate = computed(() =>
-    this.calculatePercentage(
-      this.statisticsState().losses,
-      this.statisticsState().totalRounds
-    )
+  readonly moveDistribution$: Observable<Record<Move, number>> = this.rounds$.pipe(
+    map(rounds => {
+      const distribution: Record<Move, number> = {
+        ROCK: 0,
+        PAPER: 0,
+        SCISSORS: 0
+      };
+      for (const round of rounds) {
+        distribution[round.playerMove]++;
+      }
+      return distribution;
+    })
   );
 
-  readonly drawRate = computed(() =>
-    this.calculatePercentage(
-      this.statisticsState().draws,
-      this.statisticsState().totalRounds
-    )
+  readonly mostPlayedMove$: Observable<Move | null> = this.rounds$.pipe(
+    map(rounds => {
+      if (rounds.length === 0) {
+        return null;
+      }
+      const distribution: Record<Move, number> = {
+        ROCK: 0,
+        PAPER: 0,
+        SCISSORS: 0
+      };
+      for (const round of rounds) {
+        distribution[round.playerMove]++;
+      }
+      const moves: Move[] = ['ROCK', 'PAPER', 'SCISSORS'];
+      return moves.reduce((mostPlayed, currentMove) =>
+        distribution[currentMove] > distribution[mostPlayed] ? currentMove : mostPlayed
+      );
+    })
   );
+
+  readonly lossRate$: Observable<number> = this.statistics$.pipe(
+    map(stats => this.calculatePercentage(stats.losses, stats.totalRounds))
+  );
+
+  readonly drawRate$: Observable<number> = this.statistics$.pipe(
+    map(stats => this.calculatePercentage(stats.draws, stats.totalRounds))
+  );
+
+  constructor(private readonly gameApi: GameApiService) {}
 
   async loadGame(): Promise<void> {
     if (
-      this.initializedState() ||
-      this.loadingState()
+      this.initializedSubject.value ||
+      this.loadingSubject.value
     ) {
       return;
     }
 
-    this.loadingState.set(true);
-    this.errorState.set(null);
+    this.loadingSubject.next(true);
+    this.errorSubject.next(null);
 
     try {
       const [rounds, statistics] =
@@ -128,36 +103,36 @@ export class GameStateService {
           )
         ]);
 
-      this.roundsState.set(rounds);
-      this.statisticsState.set(statistics);
-      this.initializedState.set(true);
+      this.roundsSubject.next(rounds);
+      this.statisticsSubject.next(statistics);
+      this.initializedSubject.next(true);
     } catch (error: unknown) {
       console.error('Failed to load game data', error);
 
-      this.errorState.set(
+      this.errorSubject.next(
         'Unable to load game data. Make sure the backend is running.'
       );
     } finally {
-      this.loadingState.set(false);
+      this.loadingSubject.next(false);
     }
   }
 
   async playRound(playerMove: Move): Promise<void> {
-    if (this.loadingState()) {
+    if (this.loadingSubject.value) {
       return;
     }
 
-    this.loadingState.set(true);
-    this.errorState.set(null);
+    this.loadingSubject.next(true);
+    this.errorSubject.next(null);
 
     try {
       const savedRound = await firstValueFrom(
         this.gameApi.playRound(playerMove)
       );
 
-      this.roundsState.update(currentRounds => [
+      this.roundsSubject.next([
         savedRound,
-        ...currentRounds
+        ...this.roundsSubject.value
       ]);
 
       const updatedStatistics =
@@ -165,47 +140,47 @@ export class GameStateService {
           this.gameApi.getStatistics()
         );
 
-      this.statisticsState.set(updatedStatistics);
-      this.initializedState.set(true);
+      this.statisticsSubject.next(updatedStatistics);
+      this.initializedSubject.next(true);
     } catch (error: unknown) {
       console.error('Failed to play round', error);
 
-      this.errorState.set(
+      this.errorSubject.next(
         'The round could not be played. Please try again.'
       );
     } finally {
-      this.loadingState.set(false);
+      this.loadingSubject.next(false);
     }
   }
 
   async resetGame(): Promise<void> {
-    if (this.loadingState()) {
+    if (this.loadingSubject.value) {
       return;
     }
 
-    this.loadingState.set(true);
-    this.errorState.set(null);
+    this.loadingSubject.next(true);
+    this.errorSubject.next(null);
 
     try {
       await firstValueFrom(
         this.gameApi.resetGame()
       );
 
-      this.roundsState.set([]);
+      this.roundsSubject.next([]);
 
-      this.statisticsState.set({
+      this.statisticsSubject.next({
         ...EMPTY_STATISTICS
       });
 
-      this.initializedState.set(true);
+      this.initializedSubject.next(true);
     } catch (error: unknown) {
       console.error('Failed to reset game', error);
 
-      this.errorState.set(
+      this.errorSubject.next(
         'The game could not be reset. Please try again.'
       );
     } finally {
-      this.loadingState.set(false);
+      this.loadingSubject.next(false);
     }
   }
 

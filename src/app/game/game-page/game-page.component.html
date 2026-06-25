@@ -1,13 +1,99 @@
-<div class="game-layout">
+<div class="game-layout" *ngIf="{
+  loading: gameState.loading$ | async,
+  statistics: gameState.statistics$ | async,
+  error: gameState.error$ | async,
+  lastRound: gameState.lastRound$ | async,
+  resultMessage: resultMessage$ | async,
+  rounds: gameState.rounds$ | async
+} as state">
+  <header class="page-heading">
+    <div>
+      <p class="eyebrow">Current session</p>
+      <h1>Rock Paper Scissors</h1>
+    </div>
+
+    <button
+      mat-stroked-button
+      type="button"
+      [disabled]="
+        state.loading ||
+        state.statistics?.totalRounds === 0
+      "
+      (click)="resetSession()"
+    >
+      <mat-icon
+        fontSet="material-symbols-outlined"
+        aria-hidden="true"
+      >
+        restart_alt
+      </mat-icon>
+
+      Reset session
+    </button>
+  </header>
+
+  <div class="api-error" role="alert" *ngIf="state.error">
+    <mat-icon
+      fontSet="material-symbols-outlined"
+      aria-hidden="true"
+    >
+      error
+    </mat-icon>
+
+    <span>{{ state.error }}</span>
+  </div>
+
   <section class="move-section">
-    <app-move-selector  (moveSelected)="onMoveSelected($event)"></app-move-selector>
-    @if (selectedMove !=null){
-        Selected Move : <strong>{{ selectedMove }}</strong>
-    }
+    <app-move-selector
+      [disabled]="state.loading || false"
+      (moveSelected)="onMoveSelected($event)"
+    ></app-move-selector>
   </section>
 
+  <mat-card
+    appearance="outlined"
+    class="result-card"
+    [class.win-result]="state.lastRound.result === 'WIN'"
+    [class.loss-result]="state.lastRound.result === 'LOSS'"
+    [class.draw-result]="state.lastRound.result === 'DRAW'"
+    *ngIf="state.lastRound"
+  >
+    <mat-card-content>
+      <div class="result-content">
+        <div>
+          <span class="result-label">
+            Latest result
+          </span>
+
+          <strong>{{ state.resultMessage }}</strong>
+        </div>
+
+        <div class="round-moves">
+          <span>
+            You:
+            <strong>{{ state.lastRound.playerMove | titlecase }}</strong>
+          </span>
+
+          <span class="versus">vs</span>
+
+          <span>
+            Computer:
+            <strong>{{ state.lastRound.computerMove | titlecase }}</strong>
+          </span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
   <section class="game-summary-grid">
-    <app-scoreboard></app-scoreboard>
-    <app-round-history></app-round-history>
+    <app-scoreboard
+      [playerWins]="state.statistics?.wins ?? 0"
+      [computerWins]="state.statistics?.losses ?? 0"
+      [draws]="state.statistics?.draws ?? 0"
+    ></app-scoreboard>
+
+    <app-round-history
+      [rounds]="state.rounds ?? []"
+    ></app-round-history>
   </section>
 </div>

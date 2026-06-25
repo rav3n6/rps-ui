@@ -1,12 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  min-height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html {
+  background-color: #07100f;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(
+      circle at top,
+      #112321 0,
+      #07100f 520px
+    );
+  color: #f8fafc;
+  font-family:
+    Roboto,
+    "Helvetica Neue",
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
 
 .material-symbols-outlined {
   font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
 }

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -13,8 +13,9 @@ import {
   providedIn: 'root'
 })
 export class GameApiService {
-  private readonly http = inject(HttpClient);
   private readonly apiUrl = '/api';
+
+  constructor(private readonly http: HttpClient) {}
 
   playRound(playerMove: Move): Observable<GameRound> {
     const request: PlayRoundRequest = {

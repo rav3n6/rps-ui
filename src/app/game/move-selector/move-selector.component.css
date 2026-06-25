@@ -6,10 +6,11 @@
 .move-card {
   width: 100%;
   margin: 0;
-  border-radius: 24px;
   overflow: hidden;
+  border-radius: 24px;
   box-sizing: border-box;
 }
+
 mat-card-header {
   padding: 20px 20px 6px;
 }
@@ -30,8 +31,7 @@ mat-card-content {
 .move-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  /* gap: 13px; */
-    gap: 16px;
+  gap: 16px;
 }
 
 .move-button {
@@ -43,12 +43,17 @@ mat-card-content {
     box-shadow 160ms ease;
 }
 
+.move-button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 18%);
+}
+
 .move-button-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   font-size: 1.05rem;
   font-weight: 600;
 }
@@ -59,18 +64,13 @@ mat-card-content {
   font-size: 40px;
 }
 
-.move-button:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 20px rgb(0 0 0 / 18%);
-}
-
 @media (max-width: 700px) {
   .move-grid {
     grid-template-columns: 1fr;
   }
 
   .move-button {
-    height: 88px;
+    height: 76px;
   }
 
   .move-button-content {
