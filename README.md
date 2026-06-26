@@ -39,18 +39,6 @@ Use a Node.js version supported by the Angular 21 toolchain included in this rep
 
 The backend must be running at `http://localhost:8080` for gameplay, history, reset, and analytics requests to succeed.
 
-## Dependency compatibility note
-
-The current dependency files combine Angular `21.2.x` with Angular Material and Angular CDK `19.2.19`. Material 19 declares peer compatibility with Angular 19 and 20, not Angular 21.
-
-Before treating the project as a clean Angular 21 installation, align both UI libraries to the same Angular major and regenerate `package-lock.json`:
-
-```bash
-npm install @angular/material@21.2.4 @angular/cdk@21.2.4
-```
-
-Commit the regenerated `package.json` and `package-lock.json` together. Do not rely on `--force` or `--legacy-peer-deps` for the final submission because those options bypass peer-dependency validation rather than resolving the version mismatch.
-
 ## Run locally
 
 First, start the backend:
@@ -61,7 +49,7 @@ cd rps-bknd
 ./mvnw spring-boot:run
 ```
 
-In a second terminal, clone and start the UI after aligning the Material/CDK versions described above:
+In a second terminal, clone and start the UI:
 
 ```bash
 git clone https://github.com/rav3n6/rps-ui.git
